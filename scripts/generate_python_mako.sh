@@ -57,37 +57,36 @@ if [[ $upload == true ]] && [[ $repo == "pypi" ]] && [[ -n $TRAVIS_REPO_SLUG ]] 
   echo "User is not 'nemtech': Disable upload to PyPI"
 fi
 
-artifactProjectName="${artifactPrefix}-${artifactName}-python"
+artifactProjectName="${artifactPrefix}-${artifactName}-python-mako"
 artifactBuildDir="${rootDir}/build/${artifactProjectName}"
 artifactSrcDir="${artifactBuildDir}/src"
 artifactPackageDir="${artifactSrcDir}/${artifactPrefix}_${artifactName}"
 artifactTestDir="${artifactBuildDir}/test"
 
-rm -rf "${rootDir}/catbuffer/_generated/python"
+rm -rf "${rootDir}/catbuffer/_generated/python_mako"
 rm -rf "${artifactBuildDir}"
 
 PYTHONPATH=".:${PYTHONPATH}" python3 "catbuffer/main.py" \
   --schema catbuffer/schemas/all.cats \
   --include catbuffer/schemas \
   --output "catbuffer/_generated" \
-  --generator python \
+  --generator python_mako \
   --copyright catbuffer/HEADER.inc
 
 mkdir -p "${artifactPackageDir}"
-cp "$rootDir/catbuffer/_generated/python/"* "${artifactPackageDir}"
+cp "$rootDir/catbuffer/_generated/python_mako/"* "${artifactPackageDir}"
 touch "${artifactPackageDir}/__init__.py"
 cp "$rootDir/LICENSE" "${artifactBuildDir}"
 cp "$rootDir/.pylintrc" "${artifactBuildDir}"
-cp "$rootDir/generators/python/README.md" "${artifactBuildDir}"
-cp "$rootDir/generators/python/setup.py" "${artifactBuildDir}"
-cp "$rootDir/generators/python/.pypirc" "${HOME}"
+cp "$rootDir/generators/python_mako/README.md" "${artifactBuildDir}"
+cp "$rootDir/generators/python_mako/setup.py" "${artifactBuildDir}"
 sed -i -e "s/#artifactName/$artifactName/g" "${artifactBuildDir}/setup.py"
 sed -i -e "s/#artifactVersion/$artifactVersion/g" "${artifactBuildDir}/setup.py"
 
 mkdir -p "${artifactTestDir}"
-PYTEST_CACHE="$rootDir/test/python/.pytest_cache/"
+PYTEST_CACHE="$rootDir/test/python_mako/.pytest_cache/"
 if [ -d "$PYTEST_CACHE" ]; then rm -Rf "$PYTEST_CACHE"; fi
-cp -r "$rootDir/test/python/" "${artifactTestDir}"
+cp -r "$rootDir/test/python_mako/" "${artifactTestDir}"
 
 # Build
 cd "${artifactBuildDir}"
