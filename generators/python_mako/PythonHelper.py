@@ -6,7 +6,7 @@ from generators.common.Helper import Helper, AttributeKind
 class PythonHelper(Helper):
 
     @staticmethod
-    def add_required_import(required_import: set, class_name, base_class_name, import_type):
+    def add_required_import(required_import: set, import_type, class_name, base_class_name):
         for typename in re.split('[\\[\\]]', import_type):
             if typename:
                 if typename in ['List']:

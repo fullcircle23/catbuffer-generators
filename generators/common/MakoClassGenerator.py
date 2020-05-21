@@ -120,8 +120,10 @@ class MakoClassGenerator(MakoStaticClassGenerator):
         attribute_is_reserved = self.helper.is_reserved_field(attribute)
         attribute_is_inline = not attribute_is_super and aggregate_attribute_name is not None
         attribute_aggregate_class = attribute.get('aggregate_class', None)
-        self.required_import = self.helper.add_required_import(self.required_import, self.generated_class_name,
-                                                               self.generated_base_class_name, attribute_var_type)
+        self.required_import = self.helper.add_required_import(self.required_import,
+                                                               attribute_var_type,
+                                                               self.generated_class_name,
+                                                               self.generated_base_class_name)
         if attribute_is_conditional:
             condition_type_attribute = self.helper.get_attribute_property_equal(self.schema,
                                                                                 self.class_schema['layout'], 'name',

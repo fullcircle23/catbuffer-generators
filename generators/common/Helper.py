@@ -4,7 +4,6 @@ from abc import ABC, abstractmethod
 
 
 # pylint: disable=too-many-public-methods
-from typing import Set
 
 
 class TypeDescriptorType(Enum):
@@ -107,7 +106,11 @@ class Helper(ABC):
         return True
 
     @staticmethod
-    def add_required_import(required_import: set, class_name, base_class_name, import_type):
+    def add_required_import(required_import: set,
+                            import_type,
+                            class_name,
+                            base_class_name  # pylint: disable=unused-argument
+                            ):
         if not import_type == class_name:
             required_import.add(import_type)
         return required_import
