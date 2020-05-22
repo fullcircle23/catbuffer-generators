@@ -75,7 +75,7 @@ class ${generator.generated_class_name}${'(' + str(generator.generated_base_clas
         ${a.attribute_name} = ${a.attribute_class_name}.loadFromBinary(bytes_)  # kind:CUSTOM2
         bytes_ = bytes_[${a.attribute_name}.getSize():]
     % elif a.kind == helper.AttributeKind.CUSTOM:
-        ${a.attribute_name} = ${a.attribute_class_name}.loadFromBinary(payload)  # kind:CUSTOM3
+        ${a.attribute_name} = ${a.attribute_class_name}.loadFromBinary(bytes_)  # kind:CUSTOM3
     % elif a.kind == helper.AttributeKind.FILL_ARRAY:
         ${a.attribute_name}ByteSize = len(bytes_)  # kind:FILL_ARRAY
         ${a.attribute_name}: List[${a.attribute_class_name}] = []
@@ -87,6 +87,7 @@ class ${generator.generated_class_name}${'(' + str(generator.generated_base_clas
             bytes_ = bytes_[itemSize:]
     % elif a.kind == helper.AttributeKind.FLAGS:
         ${a.attribute_name} = ${a.attribute_class_name}.bytesToFlags(bytes_, ${a.attribute_size})  # kind:FLAGS
+        bytes_ = bytes_[${a.attribute_size}:]
     % elif a.kind == helper.AttributeKind.VAR_ARRAY:
         ${a.attribute_name}ByteSize = ${a.attribute_size}  # kind:VAR_ARRAY
         ${a.attribute_name}: List[${a.attribute_class_name}] = []
